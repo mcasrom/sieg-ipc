@@ -18,3 +18,103 @@
 [2026-03-22 09:28:05] [PARQUET] ipc_series: 10 filas
 [2026-03-22 09:28:05] Ingesta IPC completada — 360 registros
 [2026-03-22 09:28:05] ==================================================
+[2026-03-22 09:41:28] ==================================================
+[2026-03-22 09:41:28] SIEG Monitor IPC — Inicio ingesta
+[2026-03-22 09:41:28] DB inicializada OK
+[2026-03-22 09:41:31] [INE] IPC General: 36 datos · último: 2.9%
+[2026-03-22 09:41:32] [INE] IPC Subyacente: 36 datos · último: 2.5%
+[2026-03-22 09:41:34] [INE] Alimentos y bebidas: 36 datos · último: 3.1%
+[2026-03-22 09:41:35] [INE] Alimentos elaborados: 36 datos · último: 2.3%
+[2026-03-22 09:41:37] [INE] Electricidad gas: 36 datos · último: 2.7%
+[2026-03-22 09:41:38] [INE] Servicios: 36 datos · último: 3.7%
+[2026-03-22 09:41:39] [INE] Bienes industriales: 36 datos · último: 1.3%
+[2026-03-22 09:41:40] [INE] Alquiler vivienda: 36 datos · último: 4.5%
+[2026-03-22 09:41:41] [INE] Medicamentos: 36 datos · último: -1.2%
+[2026-03-22 09:41:42] [INE] Transporte carretera: 36 datos · último: 4.8%
+[2026-03-22 09:41:42] BD: 360 registros IPC
+[2026-03-22 09:41:42] [PARQUET] ipc_ultimo: 10 filas
+[2026-03-22 09:41:42] [PARQUET] ipc_datos: 360 filas
+[2026-03-22 09:41:42] [PARQUET] ipc_general: 36 filas
+[2026-03-22 09:41:42] [PARQUET] ipc_series: 10 filas
+[2026-03-22 09:41:42] Ingesta IPC completada — 360 registros
+[2026-03-22 09:41:42] ==================================================
+[2026-03-22 09:45:54] ==================================================
+[2026-03-22 09:45:54] SIEG Monitor IPC — Inicio ingesta
+[2026-03-22 09:45:54] DB inicializada OK
+[2026-03-22 09:45:56] [INE] IPC General: 36 datos · último: 2.9%
+[2026-03-22 09:45:57] [INE] IPC Subyacente: 0 datos · último: 2.5%
+[2026-03-22 09:45:57] [INE] Alimentos y bebidas: 0 datos · último: 3.1%
+[2026-03-22 09:45:57] [INE] Alimentos elaborados: 0 datos · último: 2.3%
+[2026-03-22 09:45:57] [INE] Electricidad gas: 0 datos · último: 2.7%
+[2026-03-22 09:45:58] [INE] Servicios: 0 datos · último: 3.7%
+[2026-03-22 09:45:58] [INE] Bienes industriales: 0 datos · último: 1.3%
+[2026-03-22 09:45:58] [INE] Alquiler vivienda: 0 datos · último: 4.5%
+[2026-03-22 09:45:59] [INE] Medicamentos: 0 datos · último: -1.2%
+[2026-03-22 09:45:59] [INE] Transporte carretera: 0 datos · último: 4.8%
+[2026-03-22 09:45:59] BD: 36 registros IPC
+[2026-03-22 09:45:59] [PARQUET] ipc_ultimo: 10 filas
+[2026-03-22 09:45:59] [PARQUET] ipc_datos: 36 filas
+[2026-03-22 09:45:59] [PARQUET] ipc_general: 36 filas
+[2026-03-22 09:45:59] [PARQUET] ipc_series: 10 filas
+[2026-03-22 09:45:59] Ingesta IPC completada — 36 registros
+[2026-03-22 09:45:59] ==================================================
+[2026-03-22 09:47:27] ==================================================
+[2026-03-22 09:47:27] SIEG Monitor IPC — Inicio ingesta
+[2026-03-22 09:47:27] DB inicializada OK
+[2026-03-22 09:47:30] [INE] IPC General: 36 datos · último: 2.9%
+[2026-03-22 09:47:31] [INE] IPC Subyacente: 0 datos · último: 2.5%
+[2026-03-22 09:47:31] [INE] Alimentos y bebidas: 0 datos · último: 3.1%
+[2026-03-22 09:47:31] [INE] Alimentos elaborados: 0 datos · último: 2.3%
+[2026-03-22 09:47:31] [INE] Electricidad gas: 0 datos · último: 2.7%
+[2026-03-22 09:47:32] [INE] Servicios: 0 datos · último: 3.7%
+[2026-03-22 09:47:32] [INE] Bienes industriales: 0 datos · último: 1.3%
+[2026-03-22 09:47:32] [INE] Alquiler vivienda: 0 datos · último: 4.5%
+[2026-03-22 09:47:33] [INE] Medicamentos: 0 datos · último: -1.2%
+[2026-03-22 09:47:33] [INE] Transporte carretera: 0 datos · último: 4.8%
+[2026-03-22 09:47:33] BD: 36 registros IPC
+[2026-03-22 09:47:33] [PARQUET] ipc_ultimo: 10 filas
+[2026-03-22 09:47:33] [PARQUET] ipc_datos: 36 filas
+[2026-03-22 09:47:33] [PARQUET] ipc_general: 36 filas
+[2026-03-22 09:47:33] [PARQUET] ipc_series: 10 filas
+[2026-03-22 09:47:33] Ingesta IPC completada — 36 registros
+[2026-03-22 09:47:33] ==================================================
+[2026-03-22 09:50:19] ==================================================
+[2026-03-22 09:50:19] SIEG Monitor IPC — Inicio ingesta
+[2026-03-22 09:50:20] DB inicializada OK
+[2026-03-22 09:50:23] [INE] IPC General: 36 datos · último: 2.9%
+[2026-03-22 09:50:24] [INE] IPC Subyacente: 36 datos · último: 2.5%
+[2026-03-22 09:50:25] [INE] Alimentos y bebidas: 36 datos · último: 3.1%
+[2026-03-22 09:50:26] [INE] Alimentos elaborados: 36 datos · último: 2.3%
+[2026-03-22 09:50:27] [INE] Electricidad gas: 36 datos · último: 2.7%
+[2026-03-22 09:50:28] [INE] Servicios: 36 datos · último: 3.7%
+[2026-03-22 09:50:29] [INE] Bienes industriales: 36 datos · último: 1.3%
+[2026-03-22 09:50:30] [INE] Alquiler vivienda: 36 datos · último: 4.5%
+[2026-03-22 09:50:31] [INE] Medicamentos: 36 datos · último: -1.2%
+[2026-03-22 09:50:32] [INE] Transporte carretera: 36 datos · último: 4.8%
+[2026-03-22 09:50:32] BD: 360 registros IPC
+[2026-03-22 09:50:32] [PARQUET] ipc_ultimo: 10 filas
+[2026-03-22 09:50:32] [PARQUET] ipc_datos: 360 filas
+[2026-03-22 09:50:32] [PARQUET] ipc_general: 36 filas
+[2026-03-22 09:50:32] [PARQUET] ipc_series: 10 filas
+[2026-03-22 09:50:33] Ingesta IPC completada — 360 registros
+[2026-03-22 09:50:33] ==================================================
+[2026-03-22 09:54:40] ==================================================
+[2026-03-22 09:54:40] SIEG Monitor IPC — Inicio ingesta
+[2026-03-22 09:54:40] DB inicializada OK
+[2026-03-22 09:54:43] [INE] IPC General: 36 datos · último: 2.9%
+[2026-03-22 09:54:44] [INE] IPC Subyacente: 36 datos · último: 2.5%
+[2026-03-22 09:54:44] [INE] Alimentos y bebidas: 36 datos · último: 3.1%
+[2026-03-22 09:54:45] [INE] Alimentos elaborados: 36 datos · último: 2.3%
+[2026-03-22 09:54:46] [INE] Electricidad gas: 36 datos · último: 2.7%
+[2026-03-22 09:54:46] [INE] Servicios: 36 datos · último: 3.7%
+[2026-03-22 09:54:47] [INE] Bienes industriales: 36 datos · último: 1.3%
+[2026-03-22 09:54:48] [INE] Alquiler vivienda: 36 datos · último: 4.5%
+[2026-03-22 09:54:48] [INE] Medicamentos: 36 datos · último: -1.2%
+[2026-03-22 09:54:49] [INE] Transporte carretera: 36 datos · último: 4.8%
+[2026-03-22 09:54:49] BD: 360 registros IPC
+[2026-03-22 09:54:49] [PARQUET] ipc_ultimo: 10 filas
+[2026-03-22 09:54:49] [PARQUET] ipc_datos: 36 filas
+[2026-03-22 09:54:49] [PARQUET] ipc_general: 36 filas
+[2026-03-22 09:54:49] [PARQUET] ipc_series: 10 filas
+[2026-03-22 09:54:49] Ingesta IPC completada — 360 registros
+[2026-03-22 09:54:49] ==================================================

@@ -153,8 +153,8 @@ def exportar_parquet(conn):
 
     exportaciones = {
         "ipc_ultimo":  "SELECT * FROM ipc_ultimo ORDER BY valor DESC",
-        "ipc_datos":   "SELECT * FROM ipc_datos ORDER BY cod, fecha DESC",
-        "ipc_general": "SELECT * FROM ipc_datos WHERE categoria = 'IPC General' ORDER BY fecha",
+        "ipc_datos":   "SELECT * FROM ipc_datos WHERE fecha >= '2023-01-01' ORDER BY cod, fecha DESC",
+        "ipc_general": "SELECT * FROM ipc_datos WHERE categoria = 'IPC General' AND fecha >= '2023-01-01' ORDER BY fecha",
         "ipc_series":  "SELECT * FROM ipc_series",
     }
 
