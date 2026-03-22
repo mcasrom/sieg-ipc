@@ -27,16 +27,16 @@ os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
 
 # Series IPC del INE — códigos verificados
 SERIES_IPC = {
-    "IPC General":          ("IPC251856", "#ef4444"),
-    "IPC Subyacente":       ("IPC6401",   "#f97316"),
-    "Alimentos y bebidas":  ("IPC6471",   "#eab308"),
-    "Alimentos elaborados": ("IPC6478",   "#84cc16"),
-    "Electricidad gas":     ("IPC6394",   "#3b82f6"),
-    "Servicios":            ("IPC6492",   "#8b5cf6"),
-    "Bienes industriales":  ("IPC6485",   "#06b6d4"),
-    "Alquiler vivienda":    ("IPC5029",   "#ec4899"),
-    "Medicamentos":         ("IPC5386",   "#14b8a6"),
-    "Transporte carretera": ("IPC5519",   "#f59e0b"),
+    "IPC General":              ("IPC251856", "#ef4444"),
+    "Alimentos y bebidas":      ("IPC251862", "#eab308"),
+    "Bebidas y tabaco":         ("IPC251867", "#84cc16"),
+    "Vestido y calzado":        ("IPC251872", "#06b6d4"),
+    "Vivienda y energía":       ("IPC251877", "#3b82f6"),
+    "Muebles y hogar":          ("IPC251882", "#8b5cf6"),
+    "Sanidad":                  ("IPC251887", "#14b8a6"),
+    "Transporte":               ("IPC251892", "#f59e0b"),
+    "Restaurantes y hoteles":   ("IPC251845", "#ec4899"),
+    "Otros bienes y servicios": ("IPC251850", "#f97316"),
 }
 
 def log(msg):
@@ -83,7 +83,7 @@ def init_db(conn):
     """)
     log("DB inicializada OK")
 
-def fetch_serie(conn, categoria, cod, color, nult=36):
+def fetch_serie(conn, categoria, cod, color, nult=999):
     url = f"https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/{cod}?nult={nult}"
     try:
         r = requests.get(url, timeout=15, headers={"User-Agent": "SIEG-IPC/1.0"})
@@ -101,6 +101,10 @@ def fetch_serie(conn, categoria, cod, color, nult=36):
         # Guardar datos
         insertados = 0
         valores = data.get("Data", [])
+        # Solo últimos 36 meses (desde 2023)
+        # Ordenar por año/periodo descendente y tomar últimos 36
+        valores = sorted(valores, key=lambda x: (x["Anyo"], x["FK_Periodo"]), reverse=True)[:36]
+        valores = sorted(valores, key=lambda x: (x["Anyo"], x["FK_Periodo"]))  # volver a orden ascendente
         for v in valores:
             if v.get("Secreto", False):
                 continue
@@ -153,8 +157,8 @@ def exportar_parquet(conn):
 
     exportaciones = {
         "ipc_ultimo":  "SELECT * FROM ipc_ultimo ORDER BY valor DESC",
-        "ipc_datos":   "SELECT * FROM ipc_datos WHERE fecha >= '2023-01-01' ORDER BY cod, fecha DESC",
-        "ipc_general": "SELECT * FROM ipc_datos WHERE categoria = 'IPC General' AND fecha >= '2023-01-01' ORDER BY fecha",
+        "ipc_datos":   "SELECT * FROM ipc_datos ORDER BY cod, fecha DESC",
+        "ipc_general": "SELECT * FROM ipc_datos WHERE categoria = 'IPC General' ORDER BY fecha",
         "ipc_series":  "SELECT * FROM ipc_series",
     }
 
