@@ -222,10 +222,11 @@ with tab2:
 
         # Selector de categorías
         cats = sorted(df_datos["categoria"].unique().tolist())
+        default_cats = [c for c in ["IPC General", "IPC Subyacente", "Alimentos y bebidas", "Alquiler vivienda"] if c in cats]
         cats_sel = st.multiselect(
             "Categorías a mostrar:",
             options=cats,
-            default=["IPC General", "IPC Subyacente", "Alimentos y bebidas", "Alquiler vivienda"]
+            default=default_cats if default_cats else cats[:4]
         )
 
         if cats_sel:
