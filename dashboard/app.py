@@ -113,7 +113,7 @@ def cargar_datos():
         if os.path.exists(DB_PATH):
             conn = duckdb.connect(DB_PATH, read_only=True)
             df_ultimo  = conn.execute("SELECT * FROM ipc_ultimo ORDER BY valor DESC").df()
-            df_datos   = conn.execute("SELECT * FROM ipc_datos ORDER BY categoria, fecha").df()
+            df_datos   = conn.execute("SELECT * FROM ipc_datos WHERE fecha >= '2023-01-01' ORDER BY categoria, fecha").df()
             df_general = conn.execute("SELECT * FROM ipc_datos WHERE categoria = 'IPC General' ORDER BY fecha").df()
             conn.close()
         else:
