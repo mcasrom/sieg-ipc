@@ -120,19 +120,29 @@ def cargar_datos():
             df_ultimo  = pd.read_parquet(os.path.join(EXP_DIR, "ipc_ultimo.parquet")) if os.path.exists(os.path.join(EXP_DIR, "ipc_ultimo.parquet")) else pd.DataFrame()
             df_datos   = pd.read_parquet(os.path.join(EXP_DIR, "ipc_datos.parquet")) if os.path.exists(os.path.join(EXP_DIR, "ipc_datos.parquet")) else pd.DataFrame()
             df_general = pd.read_parquet(os.path.join(EXP_DIR, "ipc_general.parquet")) if os.path.exists(os.path.join(EXP_DIR, "ipc_general.parquet")) else pd.DataFrame()
-        return df_ultimo, df_datos, df_general
+        # Veracidad
+        try:
+            if os.path.exists(DB_PATH):
+                df_veracidad = conn.execute("SELECT * FROM ipc_veracidad ORDER BY fecha DESC").df() if 'conn' in dir() else pd.DataFrame()
+            else:
+                vpath = os.path.join(EXP_DIR, "ipc_veracidad.parquet")
+                df_veracidad = pd.read_parquet(vpath) if os.path.exists(vpath) else pd.DataFrame()
+        except:
+            df_veracidad = pd.DataFrame()
+        return df_ultimo, df_datos, df_general, df_veracidad
     except Exception as e:
         st.error(f"Error: {e}")
         return pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
 
-df_ultimo, df_datos, df_general = cargar_datos()
+df_ultimo, df_datos, df_general, df_veracidad = cargar_datos()
 
 # ── Tabs ──────────────────────────────────────────────────
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     "📊 Resumen IPC",
     "📈 Evolución histórica",
     "🛒 Cesta de la compra",
     "🔮 Predicción tendencia",
+    "🔍 Veracidad INE vs Eurostat",
     "📖 Guía"
 ])
 
@@ -362,6 +372,97 @@ with tab4:
 
 # ── Tab 5: Guía ───────────────────────────────────────────
 with tab5:
+    st.header("🔍 Veracidad IPC — INE vs Eurostat")
+    st.caption("Comparativa entre el IPC oficial del INE y el HICP armonizado de Eurostat")
+
+    st.markdown("""
+> ⚠️ **Nota metodológica:** El IPC del INE y el HICP de Eurostat miden conceptos similares
+> pero con metodologías distintas. Divergencias de hasta 0.3pp son normales por diferencias
+> en la cesta de referencia, ponderaciones y tratamiento de servicios.
+> Divergencias superiores a 0.5pp merecen análisis adicional.
+    """)
+
+    if df_veracidad.empty:
+        st.info("Sin datos de veracidad. Ejecuta scripts/fetch_eurostat.py primero.")
+    else:
+        import pandas as pd
+        df_veracidad["fecha"] = pd.to_datetime(df_veracidad["fecha"], errors="coerce")
+
+        # KPIs
+        n_alertas = len(df_veracidad[df_veracidad["alerta"] == True])
+        div_media = df_veracidad["divergencia"].mean()
+        div_max   = df_veracidad["divergencia"].abs().max()
+        ultimo    = df_veracidad.iloc[0]
+
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("📊 Meses comparados", len(df_veracidad))
+        c2.metric("⚠️ Alertas divergencia", n_alertas)
+        c3.metric("📐 Divergencia media", f"{div_media:+.2f}pp")
+        c4.metric("📈 Divergencia máxima", f"{div_max:.2f}pp")
+
+        st.markdown("---")
+
+        # Gráfico comparativo
+        import altair as alt
+
+        df_chart = df_veracidad.copy()
+        df_ine = df_chart[["fecha", "ine_valor"]].rename(columns={"ine_valor": "valor"})
+        df_ine["fuente"] = "INE (oficial)"
+        df_eur = df_chart[["fecha", "eurostat_valor"]].rename(columns={"eurostat_valor": "valor"})
+        df_eur["fuente"] = "Eurostat HICP"
+        df_plot = pd.concat([df_ine, df_eur])
+
+        color_scale = alt.Scale(
+            domain=["INE (oficial)", "Eurostat HICP"],
+            range=["#00cc33", "#3b82f6"]
+        )
+
+        chart = alt.Chart(df_plot).mark_line(point=True).encode(
+            x=alt.X("fecha:T", title="Fecha"),
+            y=alt.Y("valor:Q", title="IPC General (%)"),
+            color=alt.Color("fuente:N", scale=color_scale, title="Fuente"),
+            tooltip=["fecha:T", "fuente:N", alt.Tooltip("valor:Q", format=".2f")]
+        ).properties(height=300, title="IPC General: INE vs Eurostat HICP")
+
+        st.altair_chart(chart, use_container_width=True)
+
+        # Divergencia
+        chart_div = alt.Chart(df_chart).mark_bar().encode(
+            x=alt.X("fecha:T", title="Fecha"),
+            y=alt.Y("divergencia:Q", title="Divergencia INE - Eurostat (pp)"),
+            color=alt.condition(
+                alt.datum.divergencia > 0,
+                alt.value("#00cc33"),
+                alt.value("#ef4444")
+            ),
+            tooltip=["fecha:T", alt.Tooltip("divergencia:Q", format="+.2f"), "nivel:N"]
+        ).properties(height=200, title="Divergencia INE vs Eurostat (pp) — verde=INE mayor, rojo=Eurostat mayor")
+
+        linea_cero = alt.Chart(pd.DataFrame({"v": [0]})).mark_rule(
+            color="#ffffff", opacity=0.3, strokeDash=[4, 4]
+        ).encode(y="v:Q")
+
+        st.altair_chart(chart_div + linea_cero, use_container_width=True)
+
+        st.markdown("---")
+        st.subheader("📋 Detalle mensual")
+
+        df_tabla = df_veracidad[["fecha", "ine_valor", "eurostat_valor", "divergencia", "nivel", "alerta"]].copy()
+        df_tabla["fecha"] = df_tabla["fecha"].dt.strftime("%m/%Y")
+        df_tabla["alerta"] = df_tabla["alerta"].map({True: "⚠️ Sí", False: "✅ No"})
+        df_tabla.columns = ["Mes", "INE (%)", "Eurostat (%)", "Divergencia (pp)", "Nivel", "Alerta"]
+        st.dataframe(df_tabla, use_container_width=True, hide_index=True)
+
+        st.markdown("""
+---
+**Interpretación:**
+- 🟢 **OK** — Diferencia < 0.2pp — normal, diferencias metodológicas menores
+- 🟡 **BAJA** — Diferencia 0.2-0.5pp — revisar metodología de cálculo
+- 🟠 **MEDIA** — Diferencia 0.5-1.0pp — divergencia significativa
+- 🔴 **ALTA** — Diferencia > 1.0pp — divergencia muy relevante, posible sesgo
+        """)
+
+with tab6:
     st.header("📖 Guía de uso")
     st.markdown("""
 ## SIEG Monitor IPC · Inflación España
