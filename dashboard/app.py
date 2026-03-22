@@ -122,11 +122,15 @@ def cargar_datos():
             df_general = pd.read_parquet(os.path.join(EXP_DIR, "ipc_general.parquet")) if os.path.exists(os.path.join(EXP_DIR, "ipc_general.parquet")) else pd.DataFrame()
         # Veracidad
         try:
-            if os.path.exists(DB_PATH):
-                df_veracidad = conn.execute("SELECT * FROM ipc_veracidad ORDER BY fecha DESC").df() if 'conn' in dir() else pd.DataFrame()
+            vpath = os.path.join(EXP_DIR, "ipc_veracidad.parquet")
+            if os.path.exists(vpath):
+                df_veracidad = pd.read_parquet(vpath)
+            elif os.path.exists(DB_PATH):
+                conn2 = duckdb.connect(DB_PATH, read_only=True)
+                df_veracidad = conn2.execute("SELECT * FROM ipc_veracidad ORDER BY fecha DESC").df()
+                conn2.close()
             else:
-                vpath = os.path.join(EXP_DIR, "ipc_veracidad.parquet")
-                df_veracidad = pd.read_parquet(vpath) if os.path.exists(vpath) else pd.DataFrame()
+                df_veracidad = pd.DataFrame()
         except:
             df_veracidad = pd.DataFrame()
         return df_ultimo, df_datos, df_general, df_veracidad
