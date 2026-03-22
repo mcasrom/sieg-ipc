@@ -1,0 +1,20 @@
+[2026-03-22 09:27:48] ==================================================
+[2026-03-22 09:27:48] SIEG Monitor IPC — Inicio ingesta
+[2026-03-22 09:27:48] DB inicializada OK
+[2026-03-22 09:27:54] [INE] IPC General: 36 datos · último: 2.9%
+[2026-03-22 09:27:55] [INE] IPC Subyacente: 36 datos · último: 2.5%
+[2026-03-22 09:27:57] [INE] Alimentos y bebidas: 36 datos · último: 3.1%
+[2026-03-22 09:27:59] [INE] Alimentos elaborados: 36 datos · último: 2.3%
+[2026-03-22 09:28:00] [INE] Electricidad gas: 36 datos · último: 2.7%
+[2026-03-22 09:28:01] [INE] Servicios: 36 datos · último: 3.7%
+[2026-03-22 09:28:02] [INE] Bienes industriales: 36 datos · último: 1.3%
+[2026-03-22 09:28:03] [INE] Alquiler vivienda: 36 datos · último: 4.5%
+[2026-03-22 09:28:04] [INE] Medicamentos: 36 datos · último: -1.2%
+[2026-03-22 09:28:05] [INE] Transporte carretera: 36 datos · último: 4.8%
+[2026-03-22 09:28:05] BD: 360 registros IPC
+[2026-03-22 09:28:05] [PARQUET] ipc_ultimo: 10 filas
+[2026-03-22 09:28:05] [PARQUET] ipc_datos: 360 filas
+[2026-03-22 09:28:05] [PARQUET] ipc_general: 36 filas
+[2026-03-22 09:28:05] [PARQUET] ipc_series: 10 filas
+[2026-03-22 09:28:05] Ingesta IPC completada — 360 registros
+[2026-03-22 09:28:05] ==================================================

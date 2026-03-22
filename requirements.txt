@@ -1,0 +1,7 @@
+streamlit
+pandas
+requests
+duckdb
+pyarrow
+altair
+scikit-learn
