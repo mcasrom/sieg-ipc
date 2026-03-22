@@ -432,16 +432,19 @@ with tab5:
         st.altair_chart(chart, use_container_width=True)
 
         # Divergencia
-        chart_div = alt.Chart(df_chart).mark_bar().encode(
+        div_max_val = df_chart["divergencia"].abs().max()
+        escala_y = max(div_max_val * 1.5, 0.5)
+        chart_div = alt.Chart(df_chart).mark_bar(size=12).encode(
             x=alt.X("fecha:T", title="Fecha"),
-            y=alt.Y("divergencia:Q", title="Divergencia INE - Eurostat (pp)"),
+            y=alt.Y("divergencia:Q", title="Divergencia INE - Eurostat (pp)",
+                    scale=alt.Scale(domain=[-escala_y, escala_y])),
             color=alt.condition(
                 alt.datum.divergencia > 0,
                 alt.value("#00cc33"),
                 alt.value("#ef4444")
             ),
             tooltip=["fecha:T", alt.Tooltip("divergencia:Q", format="+.2f"), "nivel:N"]
-        ).properties(height=200, title="Divergencia INE vs Eurostat (pp) — verde=INE mayor, rojo=Eurostat mayor")
+        ).properties(height=250, title="Divergencia INE vs Eurostat (pp) — verde=INE mayor, rojo=Eurostat mayor")
 
         linea_cero = alt.Chart(pd.DataFrame({"v": [0]})).mark_rule(
             color="#ffffff", opacity=0.3, strokeDash=[4, 4]
